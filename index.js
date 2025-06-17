@@ -4,15 +4,16 @@ module.exports = function (requirePath) {
   }
 
   let config;
+
+  const cwd = process.cwd();
   try {
-    config = require("./pathconfig");
+    config = require(`${cwd}/pathconfig`);
   } catch (e) {
     throw new Error("pathconfig.js is not found");
   }
 
   const pathConfig = config.aliases;
 
-  const cwd = process.cwd();
   const parsedPath = requirePath.split("/");
   const alias = parsedPath.find((p) => p.startsWith("@"));
 

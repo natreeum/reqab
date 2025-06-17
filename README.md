@@ -14,8 +14,9 @@ It resolves the alias based on a user-defined pathconfig.js file located in the 
 ```
 project-root/
 ├── pathconfig.js
-├── utils/
-│   └── logger.js
+├── src/
+│   └── utils/
+│     └── logger.js
 ├── index.js
 └── ...
 ```
@@ -25,11 +26,10 @@ pathconfig.js
 ```
 module.exports = {
   aliases: {
-    utils: "utils",
-    components: "src/components",
-    // Add more as needed
+    utils: "src/utils",
   },
 };
+
 ```
 
 **🚀 Usage**
@@ -38,7 +38,7 @@ module.exports = {
 const customRequire = require("./customRequire");
 
 const logger = customRequire("@utils/logger");
-logger.log("Hello!");
+logger("Hello!");
 ```
 
 ## ⚙️ How It Works
@@ -59,9 +59,7 @@ logger.log("Hello!");
 
 ```js
 // utils/logger.js
-module.exports = {
-  log: (msg) => console.log("[LOG]", msg),
-};
+module.exports = (msg) => console.log("[LOG]", msg);
 ```
 
 ```js
@@ -69,5 +67,5 @@ module.exports = {
 const requireWithAlias = require("./customRequire");
 const logger = requireWithAlias("@utils/logger");
 
-logger.log("This works!");
+logger("This works!");
 ```
