@@ -1,6 +1,6 @@
 {
   "name": "reqab",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple alias-based module resolver using custom pathconfig.",
   "license": "MIT",
   "author": "natreeum <projectkmscom@gmail.com>",

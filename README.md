@@ -49,7 +49,7 @@ module.exports = () => {
 
 // index.js
 global.reqab = require("reqab");
-const main = reqab("./service.js"); // same as "const main = require("./service.js");
+const main = require("./service.js"); // reqab doesn't support relative import
 main();
 ```
 
