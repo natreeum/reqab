@@ -9,6 +9,8 @@ A utility function to support @alias-based module resolution in Node.js using a 
 This module allows you to use custom path aliases (e.g. @utils/logger) instead of relative paths in your Node.js project.
 It resolves the alias based on a user-defined pathconfig.js file located in the root directory.
 
+In contrast to the require() function, autocomplete is not supported at the editor level.
+
 ## 📁 File Structure Example
 
 ```
@@ -29,16 +31,45 @@ module.exports = {
     utils: "src/utils",
   },
 };
-
 ```
 
-**🚀 Usage**
+## 🧪 Example
 
 ```js
-const customRequire = require("./customRequire");
+// src/utils/logger.js
+module.exports = (msg) => console.log("[LOG]", msg);
+```
 
-const logger = customRequire("@utils/logger");
-logger("Hello!");
+```js
+// service.js
+const logger = reqab("@utils/logger");
+module.exports = () => {
+  logger("This works!");
+};
+
+// index.js
+global.reqab = require("reqab");
+const main = reqab("./service.js"); // same as "const main = require("./service.js");
+main();
+```
+
+or
+
+```js
+// index.js
+const reqab = require("./customRequire");
+const logger = reqab("@utils/logger");
+
+logger("This works!");
+```
+
+```js
+// You can import npm module with reqab
+
+const axios = reqab("axios");
+axios.get("https://www.npmjs.com/package/reqab").then((res) => {
+  console.log(res.status);
+});
 ```
 
 ## ⚙️ How It Works
@@ -54,18 +85,3 @@ logger("Hello!");
     •	Throws if pathconfig.js is not found.
     •	Throws if the provided path is not a string.
     •	Throws if an alias is used but not found in pathconfig.js.
-
-## 🧪 Example
-
-```js
-// utils/logger.js
-module.exports = (msg) => console.log("[LOG]", msg);
-```
-
-```js
-// index.js
-const requireWithAlias = require("./customRequire");
-const logger = requireWithAlias("@utils/logger");
-
-logger("This works!");
-```
